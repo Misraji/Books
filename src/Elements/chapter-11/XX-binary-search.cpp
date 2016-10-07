@@ -36,7 +36,8 @@ int bsearch(const int &t, const vector<int> &arr) {
 	}
 
 	// Primary binary search algorithm.
-	while (l < u) {
+	// NOTE: That <= is absolutely important!!!!
+	while (l <= u) {
 		int m = l + ((u-l) >> 1);
 		if (arr[m] == t) {
 			return m;
@@ -55,6 +56,7 @@ int main(int argc, const char **argv) {
 
 	int result = -1;
 
+	// Even number of elements.
 	int arr1[] = {1,33,4,56,100,21, 20, 30};
 	vector<int> vec1(arr1, arr1 + 8);
 
@@ -65,9 +67,18 @@ int main(int argc, const char **argv) {
 	result = bsearch(4, vec1);
 	cout << "bsearch(4, vec1) = " << result << endl;
 
-	result = bsearch(100, vec1);
-	cout << "bsearch(100, vec1) = " << result << endl;
+	result = bsearch(30, vec1);
+	cout << "bsearch(30, vec1) = " << result << endl;
 
-	result = bsearch(56, vec1);
-	cout << "bsearch(56, vec1) = " << result << endl;
+	result = bsearch(21, vec1);
+	cout << "bsearch(21, vec1) = " << result << endl;
+
+	// Odd number of elements.
+	vec1.push_back(110);
+	copy(vec1.begin(), vec1.end(), ostream_iterator<int>(cout, ","));
+	cout << endl;
+
+	result = bsearch(30, vec1);
+	cout << "bsearch(30, vec1) = " << result << endl;
+
 }
