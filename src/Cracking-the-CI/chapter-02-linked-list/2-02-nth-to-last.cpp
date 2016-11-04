@@ -25,7 +25,7 @@ T nth_to_last(List<T> *head, const int N) {
 	int counter = 0;
 
 	curr = head;
-	while ((curr != NULL) && (counter < N)) {
+	while ((curr != NULL) && (counter < (N-1))) {
 		curr = curr->next;
 		counter++;
 	}
@@ -42,12 +42,11 @@ T nth_to_last(List<T> *head, const int N) {
 		curr = curr->next;
 	}
 
-	return nth;
+	return nth->data;
 }
 
 int main(int argc, const char **argv) {
 
 	string output("Hello world!!!");
-
 	cout << output << endl;
 }
