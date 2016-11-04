@@ -8,45 +8,40 @@ using std::string;
 #include <vector>
 using std::vector;
 
+#include <algorithm>
+using std::swap;
+
 void remove_dup(string &str) {
 
-	int i = 0;
-	int str_size = str.size();
-	int num_dups = 0;
+	if (str.empty() || (str.size() < 2)) {
+		return;
+	}
 
-	while (i < (str_size - num_dups)) {
+	int num_uniq_chars = 1;
+
+	for(int i = 1; i < str.size(); i++) {
 
 		char curr_char = str[i];
 
-		int j = i+1;
-		while (j < (str_size - num_dups)) {
-			char next_char = str[j];
-
-			if (curr_char == next_char) {
-
-				// Shift all characters forward by 1 space.
-				for (int k = j; k < (str_size - num_dups - 1); k++) {
-					str[k] = str[k+1];	
-				}
-
-				// Increase num_dups to affect chars checked.
-				num_dups++;
-
-				// NOTE: Do NOT increase j. We need to restart checking from
-				// j
-
-			} else {
-
-				// This char was safe. Skip it.
-				j++;
+		int j = 0;
+		for (j = 0; j < num_uniq_chars; j++) {
+				
+			char uniq_char = str[j];
+			if (uniq_char == curr_char) {
+				// because of this j != num_uniq_chars in the if-statement outside this
+				// loop.
+				break;
 			}
 		}
 
-		// Removed all references of ith character.
-		i++;
+		if (j == num_uniq_chars) {
+			// curr_char was encountered for the first time. 
+			swap(str[num_uniq_chars], str[i]);
+			num_uniq_chars++;
+		}
 	}
 
-	str.resize((str_size - num_dups));
+	str.resize(num_uniq_chars);
 }
 
 int main(int argc, const char **argv) {
