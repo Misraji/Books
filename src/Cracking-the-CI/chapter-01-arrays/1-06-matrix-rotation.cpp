@@ -8,15 +8,21 @@ using std::string;
 #include <vector>
 using std::vector;
 
-void rotate(vector<vector<int> > &matrix, int i, int j) {
+void rotate(vector<vector<int> > &matrix, int first_row, int first_col) {
 
 	int N = matrix.size();
-	int tmp = matrix[i][j];
+	int tmp = matrix[first_row][first_col];
 
-	matrix[i][j] = matrix[N-j-1][i];
-	matrix[N-j-1][i] = matrix[N-i-1][N-j-1];
-	matrix[N-i-1][N-j-1] = matrix[j][N-i-1];
-	matrix[j][N-i-1] = tmp;
+	int last_row = N - first_row - 1;
+	int last_col = N - first_col - 1;
+
+	matrix[first_row][first_col] = matrix[last_col][first_row];
+
+	matrix[last_col][first_row] = matrix[last_row][last_col];
+
+	matrix[last_row][last_col] = matrix[first_col][last_row];
+
+	matrix[first_col][last_row] = tmp;
 }
 
 void rotate_matrix(vector<vector<int> > &matrix) {
