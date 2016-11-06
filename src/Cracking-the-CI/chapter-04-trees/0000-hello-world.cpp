@@ -12,6 +12,13 @@ using std::string;
 using std::vector;
 
 template<typename T>
+struct Graph {
+	public:
+		T data;
+		vector<Graph<T>*> adjacent;
+};
+
+template<typename T>
 struct Tree {
 	public:
 		T data;
