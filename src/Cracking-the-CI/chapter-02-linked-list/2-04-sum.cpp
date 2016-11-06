@@ -21,52 +21,24 @@ struct List {
 		List(T d, List<T> *n, List<T> *p): data(d), next(n), prev(p) {}
 };
 
-template<typename T> 
-List<T>* copy_list(List<T> *head, List<T> *curr, T carry) {
-
-	while (head) {
-		T sum = head->data + carry;
-		
-		List<T> *new_node = new List<T>((sum % 10), NULL, curr);
-		curr->next = new_node;
-
-		carry = (sum/10);
-		curr = curr->next;
-		head = head->next;
-	}
-
-	if (carry) {
-		List<T> *new_node = new List<T>(carry, NULL, curr);
-		curr->next = new_node;
-		curr = curr->next;
-	}
-
-	return curr;
-}
-
 template<typename T>
 List<T>* list_sum(List<T> *head1, List<T> *head2) {
-
-	if ((head1 == NULL) && (head2 == NULL) ) {
-		return NULL;
-
-	} else if ((head1 == NULL) && head2) {
-		return head2;
-
-	} else if (head1 && (head2 == NULL)) {
-		return head1;
-	}
-
-	// Now both head1 and head2 are NON-NULL: Hence sum will have atlead 1
-	// Node
 
 	// Creating dummy head to ease implementation.
 	T carry = T();
 	List<T> *dummy_head = new(List<T>);
 	List<T> *curr = dummy_head;
 
-	while(head1 && head2) {
-		T sum = head1->data + head2->data + carry;
+	while(head1 || head2 || carry)  {
+		T sum = carry;
+
+		if (head1) {
+			sum += head1->data;
+		}
+
+		if (head2) {
+			sum += head2->data;
+		}
 		
 		List<T> *new_node = new List<T>((sum % 10), NULL, curr);
 		curr->next = new_node;
@@ -74,18 +46,13 @@ List<T>* list_sum(List<T> *head1, List<T> *head2) {
 		carry = (sum/10);
 		curr = curr->next;
 
-		head1 = head1->next;
-		head2 = head2->next;
-	}
+		if (head1) {
+			head1 = head1->next;
+		}
 
-	if (head1) {
-		curr = copy_list(head1, curr, carry);
-
-	} else if (head2) {
-		curr = copy_list(head2, curr, carry);
-
-	} else if (carry) {
-		curr = copy_list<int>(NULL, curr, carry);
+		if (head2) {
+			head2 = head2->next;
+		}
 	}
 
 	// Remove dummy head and return original head;

@@ -1,3 +1,6 @@
+#include <stdexcept>
+using std::runtime_error;
+
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -10,7 +13,4 @@ using std::vector;
 
 int main(int argc, const char **argv) {
 
-	string output("Hello world!!!");
-
-	cout << output << endl;
 }
